@@ -36,7 +36,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="en" className={`${epilogue.variable} ${clashDisplay.variable}`}>
       <body>
-        {children}
+        <div className="min-h-screen bg-[#F8F8FD]">{children}</div>
         <Toaster position="top-right" />
       </body>
     </html>
