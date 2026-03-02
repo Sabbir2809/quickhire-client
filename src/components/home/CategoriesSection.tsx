@@ -15,7 +15,7 @@ export default function CategoriesSection() {
   ];
 
   return (
-    <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+    <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
       <div className="flex justify-between items-center mb-10">
         <h2 className="section-title">
           Explore by <span className="text-accent">category</span>
