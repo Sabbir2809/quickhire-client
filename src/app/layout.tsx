@@ -1,3 +1,4 @@
+import { AuthProvider } from "@/context/AuthContext";
 import type { Metadata } from "next";
 import { Epilogue } from "next/font/google";
 import localFont from "next/font/local";
@@ -36,7 +37,9 @@ export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="en" className={`${epilogue.variable} ${clashDisplay.variable}`}>
       <body>
-        <div className="min-h-screen bg-[#F8F8FD]">{children}</div>
+        <AuthProvider>
+          <div className="min-h-screen bg-[#F8F8FD]">{children}</div>
+        </AuthProvider>
         <Toaster position="top-right" />
       </body>
     </html>
