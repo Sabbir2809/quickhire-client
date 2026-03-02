@@ -19,7 +19,7 @@
     @apply border border-gray-200 rounded px-4 py-3 w-full focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary text-sm;
   }
   .badge {
-    @apply inline-flex items-center px-3 py-1 rounded text-xs font-semibold;
+    @apply inline-flex items-center px-3 py-1 text-xs font-semibold;
   }
   .badge-fulltime {
     @apply badge bg-green-100 text-green-700;
