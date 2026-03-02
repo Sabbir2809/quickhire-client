@@ -1,3 +1,5 @@
+import Footer from "@/components/layout/Footer";
+import Navbar from "@/components/layout/Navbar";
 import { AuthProvider } from "@/context/AuthContext";
 import type { Metadata } from "next";
 import { Epilogue } from "next/font/google";
@@ -38,7 +40,9 @@ export default function RootLayout({ children }: RootLayoutProps) {
     <html lang="en" className={`${epilogue.variable} ${clashDisplay.variable}`}>
       <body>
         <AuthProvider>
-          <div className="min-h-screen bg-[#F8F8FD]">{children}</div>
+          <Navbar />
+          {children}
+          <Footer />
         </AuthProvider>
         <Toaster position="top-right" />
       </body>
