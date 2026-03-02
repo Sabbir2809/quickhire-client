@@ -1,8 +1,20 @@
 "use client";
+
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import SearchBar from "../ui/SearchBar";
 
 export default function HeroSection() {
+  const router = useRouter();
+
+  const handleSearch = (search: string, location: string) => {
+    const params = new URLSearchParams();
+    if (search) params.set("search", search);
+    if (location) params.set("location", location);
+
+    router.push(`/jobs?${params.toString()}`);
+  };
+
   return (
     <section className="bg-[#F8F8FD]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 pb-10 relative">
@@ -18,6 +30,7 @@ export default function HeroSection() {
                   className="absolute -bottom-3 left-0 w-full"
                   viewBox="0 0 300 12"
                   fill="none"
+                  aria-hidden="true"
                 >
                   <path
                     d="M2 8 C80 2, 200 2, 298 8"
@@ -30,6 +43,7 @@ export default function HeroSection() {
                   className="absolute -bottom-5 left-0 w-full"
                   viewBox="0 0 300 12"
                   fill="none"
+                  aria-hidden="true"
                 >
                   <path
                     d="M2 8 C80 2, 200 2, 298 8"
@@ -46,9 +60,9 @@ export default function HeroSection() {
               heights and passionate about startups.
             </p>
 
-            {/* SearchBar */}
+            {/* SearchBar with required onSearch prop */}
             <div className="relative z-20 -mr-20">
-              <SearchBar />
+              <SearchBar onSearch={handleSearch} />
             </div>
 
             {/* Popular tags */}
@@ -64,9 +78,9 @@ export default function HeroSection() {
           <div className="hidden lg:flex justify-end relative -ml-20 z-10">
             <div className="relative w-[501px] h-[707px]">
               <div className="absolute top-0 left-0 w-full h-full pointer-events-none">
-                <div className="absolute top-4 left-4 w-[480px] h-[690px] border border-[#26A4FF]"></div>
-                <div className="absolute top-12 left-12 w-[468px] h-[674px] border border-[#26A4FF] opacity-50"></div>
-                <div className="absolute top-20 left-20 w-[456px] h-[658px] border border-[#26A4FF] opacity-30"></div>
+                <div className="absolute top-4 left-4 w-[480px] h-[690px] border border-[#26A4FF]" />
+                <div className="absolute top-12 left-12 w-[468px] h-[674px] border border-[#26A4FF] opacity-50" />
+                <div className="absolute top-20 left-20 w-[456px] h-[658px] border border-[#26A4FF] opacity-30" />
               </div>
 
               {/* Hero Image */}
@@ -76,7 +90,7 @@ export default function HeroSection() {
                 fill
                 priority
                 className="object-contain"
-                sizes="501px"
+                sizes="(max-width: 768px) 100vw, 501px"
               />
             </div>
           </div>

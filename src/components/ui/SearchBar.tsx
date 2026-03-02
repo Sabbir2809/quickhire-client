@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { HiOutlineSearch } from "react-icons/hi";
 import { IoLocationOutline } from "react-icons/io5";
 import { MdKeyboardArrowDown } from "react-icons/md";
@@ -16,18 +16,51 @@ const locations = [
   "Narayanganj, Bangladesh",
 ];
 
-export default function SearchBar() {
+interface SearchBarProps {
+  initialSearch?: string;
+  initialLocation?: string;
+  onSearch: (searchVal: string, locationVal: string) => void;
+}
+
+export default function SearchBar({
+  initialSearch = "",
+  initialLocation = "Dhaka, Bangladesh",
+  onSearch,
+}: SearchBarProps) {
   const [isLocationOpen, setIsLocationOpen] = useState(false);
-  const [selectedLocation, setSelectedLocation] = useState("Dhaka, Bangladesh");
+  const [selectedLocation, setSelectedLocation] = useState(initialLocation);
+  const [searchTerm, setSearchTerm] = useState(initialSearch);
+
+  // Update local state when props change
+  useEffect(() => {
+    setSelectedLocation(initialLocation);
+  }, [initialLocation]);
+
+  useEffect(() => {
+    setSearchTerm(initialSearch);
+  }, [initialSearch]);
+
+  const handleSearch = () => {
+    onSearch(searchTerm, selectedLocation);
+  };
+
+  const handleKeyPress = (e: React.KeyboardEvent) => {
+    if (e.key === "Enter") {
+      handleSearch();
+    }
+  };
 
   return (
-    <div className="w-full max-w-[1024px] bg-white p-4 border border-gray-200 flex items-center gap-3 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.2)] hover:shadow-[0_25px_50px_-12px_rgba(0,0,0,0.25)] transition-shadow duration-300">
+    <div className="w-full max-w-[1024px] bg-white p-4 border border-gray-200 flex items-center gap-3 shadow-sm hover:shadow-md transition-shadow duration-300">
       {/* Job title or keyword */}
       <div className="flex-1 flex items-center gap-2 px-3 py-2 border-r border-gray-300">
         <HiOutlineSearch className="w-5 h-5 text-gray-600 flex-shrink-0" />
         <input
           type="text"
           placeholder="Job title or keyword"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          onKeyPress={handleKeyPress}
           className="w-full outline-none text-gray-700 placeholder-gray-400 text-sm"
         />
       </div>
@@ -49,7 +82,7 @@ export default function SearchBar() {
         </div>
 
         {isLocationOpen && (
-          <div className="absolute top-full left-0 mt-1 w-full bg-white border border-gray-200 shadow-lg max-h-60 overflow-y-auto z-20">
+          <div className="absolute top-full left-0 mt-1 w-full bg-white border border-gray-200 shadow-md max-h-60 overflow-y-auto z-20">
             {locations.map((location, index) => (
               <div
                 key={index}
@@ -67,7 +100,10 @@ export default function SearchBar() {
       </div>
 
       {/* Search button */}
-      <button className="bg-[#1D4ED8] hover:bg-[#1E3A8A] text-white font-medium px-8 py-2.5 transition-colors whitespace-nowrap text-sm">
+      <button
+        onClick={handleSearch}
+        className="bg-[#1D4ED8] hover:bg-[#1E3A8A] text-white font-medium px-8 py-2.5 transition-colors whitespace-nowrap text-sm"
+      >
         Search my job
       </button>
     </div>
