@@ -1,20 +1,11 @@
 "use client";
 
 import { applicationServices } from "@/services/applicationsServices";
+import { ApplyFormData, applyFormSchema } from "@/validations/applyForm.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
-import { z } from "zod";
-
-const schema = z.object({
-  name: z.string().min(2, "Name must be at least 2 characters"),
-  email: z.string().email("Invalid email address"),
-  resumeLink: z.string().url("Please enter a valid URL"),
-  coverNote: z.string().optional(),
-});
-
-type FormData = z.infer<typeof schema>;
 
 interface ApplyFormProps {
   jobId: string;
@@ -30,11 +21,11 @@ export default function ApplyForm({ jobId, jobTitle }: ApplyFormProps) {
     handleSubmit,
     formState: { errors },
     reset,
-  } = useForm<FormData>({
-    resolver: zodResolver(schema),
+  } = useForm<ApplyFormData>({
+    resolver: zodResolver(applyFormSchema),
   });
 
-  const onSubmit = async (data: FormData) => {
+  const onSubmit = async (data: ApplyFormData) => {
     setSubmitting(true);
     try {
       await applicationServices.create({ ...data, jobId });
