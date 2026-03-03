@@ -88,7 +88,7 @@ export default function Navbar() {
                 <div className="w-px h-8 bg-gray-300" />
 
                 <Link
-                  href="/admin/login"
+                  href="/admin/register"
                   className="btn-primary text-sm py-2.5 px-5"
                 >
                   Sign Up
@@ -106,7 +106,7 @@ export default function Navbar() {
           </button>
         </div>
 
-        {/* Mobile Menu (optional, add dropdown if needed) */}
+        {/* Mobile Menu */}
         {menuOpen && (
           <div className="md:hidden mt-2 flex flex-col gap-2">
             <Link

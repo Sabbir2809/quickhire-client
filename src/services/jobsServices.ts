@@ -1,6 +1,6 @@
 import api from "@/lib/api";
 
-export const jobsApi = {
+export const jobServices = {
   getAll: (params?: any) => api.get("/jobs", { params }),
   getById: (id: string) => api.get(`/jobs/${id}`),
   create: (data: any) => api.post("/jobs", data),

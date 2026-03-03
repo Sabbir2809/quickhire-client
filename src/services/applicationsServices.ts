@@ -1,6 +1,6 @@
 import api from "@/lib/api";
 
-export const applicationsServices = {
+export const applicationServices = {
   create: (data: any) => api.post("/applications", data),
   getAll: (params?: any) => api.get("/applications", { params }),
   getById: (id: string) => api.get(`/applications/${id}`),

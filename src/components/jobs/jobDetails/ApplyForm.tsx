@@ -1,6 +1,6 @@
 "use client";
 
-import { applicationsServices } from "@/services/applicationsServices";
+import { applicationServices } from "@/services/applicationsServices";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -37,7 +37,7 @@ export default function ApplyForm({ jobId, jobTitle }: ApplyFormProps) {
   const onSubmit = async (data: FormData) => {
     setSubmitting(true);
     try {
-      await applicationsServices.create({ ...data, jobId });
+      await applicationServices.create({ ...data, jobId });
       setSubmitted(true);
       reset();
       toast.success("Application submitted successfully!");

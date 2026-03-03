@@ -3,7 +3,7 @@
 import JobsGrid from "@/components/jobs/JobsGrid";
 import JobsPagination from "@/components/jobs/JobsPagination";
 import JobsSidebar from "@/components/jobs/JobsSidebar";
-import { jobsApi } from "@/services/jobsServices";
+import { jobServices } from "@/services/jobsServices";
 import { Job } from "@/types";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
@@ -32,7 +32,7 @@ export default function JobsPage() {
       if (type) params.type = type;
       if (featured) params.featured = featured;
 
-      const res = await jobsApi.getAll(params);
+      const res = await jobServices.getAll(params);
       setJobs(res.data.data || []);
       setTotal(res.data.meta?.total || 0);
     } catch (err) {
