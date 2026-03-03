@@ -31,8 +31,14 @@ export default function JobCard({ job, variant = "grid" }: JobCardProps) {
                 className="w-full h-full object-cover"
               />
             </div>
-
-            <Badge label={job.type} colorClass={typeColors[job.type]} />
+            <span
+              className={`badge border ${
+                typeColors[job.type] ||
+                "bg-gray-100 text-gray-600 border-gray-200"
+              }`}
+            >
+              {job.type}
+            </span>
           </div>
 
           <h3 className="font-bold text-gray-900 mb-1 text-sm">{job.title}</h3>
