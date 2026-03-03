@@ -1,7 +1,7 @@
 export default function CompaniesSection() {
   const companies = ["Vodafone", "Intel", "Tesla", "AMD", "Talkit"];
   return (
-    <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+    <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
       <p className="text-gray-500 mb-6 font-medium">Companies we helped grow</p>
       <div className="flex flex-wrap items-center justify-between gap-10 md:gap-16">
         {companies.map((c) => (

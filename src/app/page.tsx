@@ -31,8 +31,8 @@ export default function HomePage() {
         <FeaturedJobsSection />
       </section>
       {/* Latest Jobs Section */}
-      <section className="bg-[#F8F8FD]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+      <section className="bg-[#F8F8FD] py-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 ">
           <div className="flex justify-between items-center mb-10">
             <h2 className="section-title flex items-center gap-2">
               Latest <span className="text-primary">jobs open</span>
