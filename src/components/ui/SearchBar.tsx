@@ -1,20 +1,8 @@
+import { LOCATIONS } from "@/config/constants";
 import { useEffect, useState } from "react";
 import { HiOutlineSearch } from "react-icons/hi";
 import { IoLocationOutline } from "react-icons/io5";
 import { MdKeyboardArrowDown } from "react-icons/md";
-
-const locations = [
-  "Dhaka, Bangladesh",
-  "Chittagong, Bangladesh",
-  "Sylhet, Bangladesh",
-  "Khulna, Bangladesh",
-  "Rajshahi, Bangladesh",
-  "Barisal, Bangladesh",
-  "Rangpur, Bangladesh",
-  "Mymensingh, Bangladesh",
-  "Comilla, Bangladesh",
-  "Narayanganj, Bangladesh",
-];
 
 interface SearchBarProps {
   initialSearch?: string;
@@ -83,7 +71,7 @@ export default function SearchBar({
 
         {isLocationOpen && (
           <div className="absolute top-full left-0 mt-1 w-full bg-white border border-gray-200 shadow-md max-h-60 overflow-y-auto z-20">
-            {locations.map((location, index) => (
+            {LOCATIONS.map((location, index) => (
               <div
                 key={index}
                 className="px-4 py-2 hover:bg-blue-50 cursor-pointer text-gray-700 text-sm"

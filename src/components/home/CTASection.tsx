@@ -18,7 +18,7 @@ export default function CTASection() {
             </p>
 
             <Link
-              href="/admin/login"
+              href="/login"
               className="inline-block bg-white text-[#4640DE] hover:bg-gray-100 font-semibold px-6 py-3 transition-colors duration-200"
             >
               Sign Up For Free

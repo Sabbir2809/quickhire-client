@@ -48,14 +48,6 @@ export default function Navbar() {
               >
                 Browse Companies
               </Link>
-              {isAdmin && (
-                <Link
-                  href="/admin"
-                  className="text-gray-600 hover:text-primary font-medium text-sm transition-colors"
-                >
-                  Admin
-                </Link>
-              )}
             </div>
           </div>
 
@@ -79,7 +71,7 @@ export default function Navbar() {
             ) : (
               <div className="flex items-center gap-3">
                 <Link
-                  href="/admin/login"
+                  href="/login"
                   className="font-semibold text-primary hover:font-bold transition-colors"
                 >
                   Login
@@ -88,7 +80,7 @@ export default function Navbar() {
                 <div className="w-px h-8 bg-gray-300" />
 
                 <Link
-                  href="/admin/register"
+                  href="/register"
                   className="btn-primary text-sm py-2.5 px-5"
                 >
                   Sign Up
@@ -121,14 +113,6 @@ export default function Navbar() {
             >
               Browse Companies
             </Link>
-            {isAdmin && (
-              <Link
-                href="/admin"
-                className="text-gray-600 hover:text-primary font-medium text-sm"
-              >
-                Admin
-              </Link>
-            )}
             {isAdmin ? (
               <button
                 onClick={handleLogout}
@@ -139,15 +123,12 @@ export default function Navbar() {
             ) : (
               <div className="flex flex-col gap-2">
                 <Link
-                  href="/admin/login"
+                  href="/login"
                   className="font-semibold text-primary hover:font-bold transition-colors"
                 >
                   Login
                 </Link>
-                <Link
-                  href="/admin/login"
-                  className="btn-primary text-sm py-2.5 px-5"
-                >
+                <Link href="/login" className="btn-primary text-sm py-2.5 px-5">
                   Sign Up
                 </Link>
               </div>

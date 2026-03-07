@@ -1,6 +1,6 @@
 "use client";
 
-import { JOB_CATEGORIES, JOB_TYPES } from "@/types";
+import { JOB_CATEGORIES, JOB_TYPES } from "@/config/constants";
 import { useEffect, useState } from "react";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa";
 

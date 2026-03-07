@@ -64,14 +64,6 @@ export default function HeroSection() {
             <div className="relative z-20 -mr-20">
               <SearchBar onSearch={handleSearch} />
             </div>
-
-            {/* Popular tags */}
-            <div className="flex items-center gap-2 mt-4 text-sm text-gray-600">
-              <span className="font-medium">Popular :</span>
-              <span className="text-gray-500">
-                UI Designer, UX Researcher, Android, Admin
-              </span>
-            </div>
           </div>
 
           {/* Right column */}

@@ -33,23 +33,3 @@ export interface ApiResponse<T> {
   meta?: { page: number; limit: number; total: number };
   data?: T;
 }
-
-export const JOB_CATEGORIES = [
-  "Design",
-  "Sales",
-  "Marketing",
-  "Finance",
-  "Technology",
-  "Engineering",
-  "Business",
-  "Human Resource",
-  "Other",
-] as const;
-
-export const JOB_TYPES = [
-  "Full Time",
-  "Part Time",
-  "Remote",
-  "Contract",
-  "Internship",
-] as const;

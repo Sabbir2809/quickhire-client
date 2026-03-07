@@ -1,5 +1,3 @@
-"use client";
-
 import Breadcrumb from "@/components/jobs/jobDetails/Breadcrumb";
 import JobDescription from "@/components/jobs/jobDetails/JobDescription";
 import JobHeader from "@/components/jobs/jobDetails/JobHeader";
