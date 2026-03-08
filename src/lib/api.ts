@@ -18,6 +18,10 @@ api.interceptors.request.use((config) => {
 api.interceptors.response.use(
   (res) => res,
   (error) => {
+    if (error.response?.status === 401) {
+      Cookies.remove("adminToken");
+      window.location.href = "/login";
+    }
     const message = error.response?.data?.message || "Something went wrong";
     return Promise.reject(new Error(message));
   }

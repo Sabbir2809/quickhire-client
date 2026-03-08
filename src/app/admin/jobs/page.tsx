@@ -1,17 +1,16 @@
 "use client";
 
+import EditJobModal from "@/components/admin/EditJobModal";
 import LoadingSpinner from "@/components/ui/LoadingSpinner";
-import { useAuth } from "@/hooks/useAuth";
 import { jobServices } from "@/services/jobsServices";
-import { Job } from "@/types";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import {
   FiBriefcase,
   FiChevronLeft,
   FiChevronRight,
+  FiEdit,
   FiEye,
   FiPlusCircle,
   FiStar,
@@ -21,21 +20,11 @@ import {
 const PAGE_SIZE = 10;
 
 export default function JobsPage() {
-  const { isAdmin, loading: authLoading } = useAuth();
-  const router = useRouter();
-
-  const [jobs, setJobs] = useState<Job[]>([]);
+  const [jobs, setJobs] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
   const [total, setTotal] = useState(0);
-
-  useEffect(() => {
-    if (!authLoading && !isAdmin) router.push("/login");
-  }, [isAdmin, authLoading, router]);
-
-  useEffect(() => {
-    if (isAdmin) fetchJobs();
-  }, [isAdmin, page]);
+  const [editJob, setEditJob] = useState<any>(null);
 
   const fetchJobs = async () => {
     setLoading(true);
@@ -50,6 +39,10 @@ export default function JobsPage() {
     }
   };
 
+  useEffect(() => {
+    fetchJobs();
+  }, [page]);
+
   const handleDelete = async (id: string) => {
     if (!confirm("Are you sure you want to delete this job?")) return;
     try {
@@ -57,14 +50,11 @@ export default function JobsPage() {
       toast.success("Job deleted");
       fetchJobs();
     } catch (err: any) {
-      toast.error(err.message);
+      toast.error(err.message || "Failed to delete job");
     }
   };
 
   const totalPages = Math.ceil(total / PAGE_SIZE);
-
-  if (authLoading) return <LoadingSpinner />;
-  if (!isAdmin) return null;
 
   return (
     <div className="p-8">
@@ -80,8 +70,7 @@ export default function JobsPage() {
           href="/admin/jobs/new"
           className="inline-flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold px-4 py-2.5 rounded-xl transition-colors"
         >
-          <FiPlusCircle size={16} />
-          Post New Job
+          <FiPlusCircle size={16} /> Post New Job
         </Link>
       </div>
 
@@ -136,35 +125,32 @@ export default function JobsPage() {
                       key={job._id}
                       className="hover:bg-gray-50/60 transition-colors"
                     >
-                      <td className="px-6 py-4">
-                        <div className="flex items-center gap-3">
-                          <div className="w-9 h-9 rounded-lg bg-indigo-50 flex items-center justify-center shrink-0">
-                            <FiBriefcase
-                              size={16}
-                              className="text-indigo-400"
-                            />
-                          </div>
-                          <div>
-                            <p className="font-semibold text-gray-900 text-sm">
-                              {job.title}
-                            </p>
-                            <p className="text-xs text-gray-400">
-                              {job.company}
-                            </p>
-                          </div>
+                      <td className="px-6 py-4 flex items-center gap-3">
+                        <div className="w-9 h-9 rounded-lg bg-indigo-50 flex items-center justify-center shrink-0">
+                          <FiBriefcase size={16} className="text-indigo-400" />
+                        </div>
+                        <div>
+                          <p className="font-semibold text-gray-900 text-sm">
+                            {job.title}
+                          </p>
+                          <p className="text-xs text-gray-400">{job.company}</p>
                         </div>
                       </td>
+
                       <td className="px-6 py-4 text-sm text-gray-600">
                         {job.location}
                       </td>
+
                       <td className="px-6 py-4">
                         <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700">
                           {job.type}
                         </span>
                       </td>
+
                       <td className="px-6 py-4 text-sm text-gray-600">
                         {job.category}
                       </td>
+
                       <td className="px-6 py-4">
                         {job.isFeatured ? (
                           <span className="inline-flex items-center gap-1 text-amber-500 text-xs font-semibold">
@@ -174,22 +160,29 @@ export default function JobsPage() {
                           <span className="text-gray-300 text-xs">—</span>
                         )}
                       </td>
-                      <td className="px-6 py-4">
-                        <div className="flex items-center gap-3">
-                          <Link
-                            href={`/jobs/${job._id}`}
-                            target="_blank"
-                            className="inline-flex items-center gap-1 text-xs text-indigo-600 font-semibold hover:underline"
-                          >
-                            <FiEye size={13} /> View
-                          </Link>
-                          <button
-                            onClick={() => handleDelete(job._id)}
-                            className="inline-flex items-center gap-1 text-xs text-red-500 font-semibold hover:underline"
-                          >
-                            <FiTrash2 size={13} /> Delete
-                          </button>
-                        </div>
+
+                      <td className="px-6 py-4 flex items-center gap-3">
+                        <button
+                          onClick={() => setEditJob(job)}
+                          className="inline-flex items-center gap-1 text-xs text-indigo-600 font-semibold hover:underline"
+                        >
+                          <FiEdit size={13} /> Edit
+                        </button>
+
+                        <Link
+                          href={`/jobs/${job._id}`}
+                          target="_blank"
+                          className="inline-flex items-center gap-1 text-xs text-indigo-600 font-semibold hover:underline"
+                        >
+                          <FiEye size={13} /> View
+                        </Link>
+
+                        <button
+                          onClick={() => handleDelete(job._id)}
+                          className="inline-flex items-center gap-1 text-xs text-red-500 font-semibold hover:underline"
+                        >
+                          <FiTrash2 size={13} /> Delete
+                        </button>
                       </td>
                     </tr>
                   ))}
@@ -212,6 +205,7 @@ export default function JobsPage() {
                   >
                     <FiChevronLeft size={15} />
                   </button>
+
                   {Array.from({ length: totalPages }, (_, i) => i + 1).map(
                     (p) => (
                       <button
@@ -227,6 +221,7 @@ export default function JobsPage() {
                       </button>
                     )
                   )}
+
                   <button
                     onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
                     disabled={page === totalPages}
@@ -240,6 +235,15 @@ export default function JobsPage() {
           </>
         )}
       </div>
+
+      {/* Edit Job Modal */}
+      {editJob && (
+        <EditJobModal
+          job={editJob}
+          onClose={() => setEditJob(null)}
+          onUpdated={fetchJobs}
+        />
+      )}
     </div>
   );
 }

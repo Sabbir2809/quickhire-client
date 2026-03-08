@@ -33,6 +33,8 @@ export const LOCATIONS = [
 
 export const ADMIN_TOKEN = "adminToken";
 
+export const STATUSES = ["pending", "reviewed", "accepted", "rejected"];
+
 export const STATUS_STYLES: Record<string, string> = {
   accepted: "bg-green-50 text-green-700 border-green-100",
   rejected: "bg-red-50 text-red-700 border-red-100",

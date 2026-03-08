@@ -1,10 +1,10 @@
 "use client";
 
 import LoadingSpinner from "@/components/ui/LoadingSpinner";
+import { STATUS_STYLES, STATUSES } from "@/config/constants";
 import { useAuth } from "@/hooks/useAuth";
 import { applicationServices } from "@/services/applicationsServices";
 import { Application } from "@/types";
-import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import {
@@ -12,20 +12,13 @@ import {
   FiChevronRight,
   FiExternalLink,
   FiFileText,
+  FiTrash2,
 } from "react-icons/fi";
 
 const PAGE_SIZE = 10;
 
-const STATUS_STYLES: Record<string, string> = {
-  accepted: "bg-green-50 text-green-700",
-  rejected: "bg-red-50 text-red-700",
-  reviewed: "bg-blue-50 text-blue-700",
-  pending: "bg-amber-50 text-amber-700",
-};
-
 export default function ApplicationsPage() {
   const { isAdmin, loading: authLoading } = useAuth();
-  const router = useRouter();
 
   const [applications, setApplications] = useState<Application[]>([]);
   const [loading, setLoading] = useState(true);
@@ -33,12 +26,8 @@ export default function ApplicationsPage() {
   const [total, setTotal] = useState(0);
 
   useEffect(() => {
-    if (!authLoading && !isAdmin) router.push("/login");
-  }, [isAdmin, authLoading, router]);
-
-  useEffect(() => {
-    if (isAdmin) fetchApplications();
-  }, [isAdmin, page]);
+    fetchApplications();
+  }, [page]);
 
   const fetchApplications = async () => {
     setLoading(true);
@@ -52,6 +41,28 @@ export default function ApplicationsPage() {
       toast.error("Failed to load applications");
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleStatusChange = async (app: Application, newStatus: string) => {
+    try {
+      await applicationServices.updateStatus(app._id, newStatus);
+      toast.success(`Status updated to ${newStatus}`);
+      fetchApplications();
+    } catch {
+      toast.error("Failed to update status");
+    }
+  };
+
+  const handleDelete = async (app: Application) => {
+    if (!confirm("Are you sure you want to delete this application?")) return;
+
+    try {
+      await applicationServices.delete(app._id);
+      toast.success("Application deleted");
+      fetchApplications();
+    } catch {
+      toast.error("Failed to delete application");
     }
   };
 
@@ -90,16 +101,21 @@ export default function ApplicationsPage() {
               <table className="w-full">
                 <thead>
                   <tr className="bg-gray-50 border-b border-gray-100">
-                    {["Applicant", "Job", "Resume", "Status", "Applied"].map(
-                      (h) => (
-                        <th
-                          key={h}
-                          className="text-left px-6 py-3.5 text-xs font-semibold text-gray-500 uppercase tracking-wider"
-                        >
-                          {h}
-                        </th>
-                      )
-                    )}
+                    {[
+                      "Applicant",
+                      "Job",
+                      "Resume",
+                      "Status",
+                      "Applied",
+                      "Actions",
+                    ].map((h) => (
+                      <th
+                        key={h}
+                        className="text-left px-6 py-3.5 text-xs font-semibold text-gray-500 uppercase tracking-wider"
+                      >
+                        {h}
+                      </th>
+                    ))}
                   </tr>
                 </thead>
 
@@ -152,15 +168,22 @@ export default function ApplicationsPage() {
 
                       {/* Status */}
                       <td className="px-6 py-4">
-                        <span
-                          className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold ${
+                        <select
+                          value={app.status}
+                          onChange={(e) =>
+                            handleStatusChange(app, e.target.value)
+                          }
+                          className={`text-xs font-semibold px-2 py-1 rounded ${
                             STATUS_STYLES[app.status] ||
                             "bg-gray-50 text-gray-600"
                           }`}
                         >
-                          {app.status.charAt(0).toUpperCase() +
-                            app.status.slice(1)}
-                        </span>
+                          {STATUSES.map((status) => (
+                            <option key={status} value={status}>
+                              {status.charAt(0).toUpperCase() + status.slice(1)}
+                            </option>
+                          ))}
+                        </select>
                       </td>
 
                       {/* Date */}
@@ -170,6 +193,16 @@ export default function ApplicationsPage() {
                           day: "numeric",
                           year: "numeric",
                         })}
+                      </td>
+
+                      {/* Actions */}
+                      <td className="px-6 py-4 flex gap-2">
+                        <button
+                          onClick={() => handleDelete(app)}
+                          className="p-2 rounded-lg hover:bg-red-50 text-red-600"
+                        >
+                          <FiTrash2 size={16} />
+                        </button>
                       </td>
                     </tr>
                   ))}

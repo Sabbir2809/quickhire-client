@@ -26,10 +26,36 @@ export interface Application {
   createdAt: string;
 }
 
+export interface Stats {
+  totalJobs: number;
+  featuredJobs: number;
+  totalApplications: number;
+  applicationsByStatus: {
+    pending: number;
+    reviewed: number;
+    accepted: number;
+    rejected: number;
+  };
+}
+
 export interface ApiResponse<T> {
   success: boolean;
   statusCode: number;
   message: string;
   meta?: { page: number; limit: number; total: number };
   data?: T;
+}
+
+export interface JobFormData {
+  title: string;
+  company: string;
+  companyLogo: string;
+  location: string;
+  category: string;
+  type: string;
+  description: string;
+  salary: string;
+  tags: string;
+  requirements: string;
+  isFeatured: boolean;
 }

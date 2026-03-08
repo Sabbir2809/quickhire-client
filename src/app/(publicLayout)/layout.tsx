@@ -2,6 +2,11 @@ import Footer from "@/components/layout/Footer";
 import Navbar from "@/components/layout/Navbar";
 import type { ReactNode } from "react";
 
+// public home layout
+const metadata = {
+  title: "QuickHire - Find Your Dream Job",
+  description: "Great platform for job seekers passionate about startups.",
+};
 export default function PublicLayout({ children }: { children: ReactNode }) {
   return (
     <>

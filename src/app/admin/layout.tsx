@@ -1,6 +1,11 @@
 import AdminSidebar from "@/components/admin/AdminSidebar";
 import type { ReactNode } from "react";
 
+export const metadata = {
+  title: "QuickHire - Admin Panel",
+  description: "Great platform for job seekers passionate about startups.",
+};
+
 export default function AdminLayout({ children }: { children: ReactNode }) {
   return (
     <div className="flex min-h-screen bg-[#F5F7FA]">

@@ -18,6 +18,7 @@ export default function AdminLoginPage() {
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors, isSubmitting },
   } = useForm<LoginFormValues>({
     resolver: zodResolver(loginSchema),
@@ -33,8 +34,14 @@ export default function AdminLoginPage() {
     }
   };
 
+  // Demo admin credentials
+  const fillDemoCredentials = () => {
+    setValue("email", "admin@gmail.com");
+    setValue("password", "AdMiN@");
+  };
+
   return (
-    <div className="min-h-screen flex items-center justify-center p-4">
+    <div className="min-h-screen flex items-center justify-center p-4 bg-gray-50">
       <div className="w-full max-w-md">
         {/* Title */}
         <div className="mb-8 text-center">
@@ -44,7 +51,7 @@ export default function AdminLoginPage() {
           </p>
         </div>
 
-        <div className="bg-white shadow-lg border border-gray-200 p-8">
+        <div className="bg-white shadow-lg border border-gray-200 p-8 rounded-lg">
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
             {/* Email */}
             <div>
@@ -58,7 +65,7 @@ export default function AdminLoginPage() {
                   type="email"
                   placeholder="admin@example.com"
                   {...register("email")}
-                  className="w-full pl-12 pr-4 py-3 border border-gray-300 focus:ring-2 focus:ring-blue-600 focus:outline-none transition"
+                  className="w-full pl-12 pr-4 py-3 border border-gray-300 focus:ring-2 focus:ring-blue-600 focus:outline-none transition rounded"
                 />
               </div>
 
@@ -82,7 +89,7 @@ export default function AdminLoginPage() {
                   type={showPassword ? "text" : "password"}
                   placeholder="Enter your password"
                   {...register("password")}
-                  className="w-full pl-12 pr-12 py-3 border border-gray-300 focus:ring-2 focus:ring-blue-600 focus:outline-none transition"
+                  className="w-full pl-12 pr-12 py-3 border border-gray-300 focus:ring-2 focus:ring-blue-600 focus:outline-none transition rounded"
                 />
 
                 <button
@@ -101,16 +108,26 @@ export default function AdminLoginPage() {
               )}
             </div>
 
-            {/* Button */}
+            {/* Submit Button */}
             <button
               type="submit"
               disabled={isSubmitting}
-              className="w-full py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold transition disabled:opacity-60"
+              className="w-full py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold transition disabled:opacity-60 rounded"
             >
               {isSubmitting ? "Signing in..." : "Sign In"}
             </button>
+
+            {/* Demo Admin Button */}
+            <button
+              type="button"
+              onClick={fillDemoCredentials}
+              className="w-full mt-2 py-2 bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold rounded transition"
+            >
+              Demo Admin
+            </button>
           </form>
 
+          {/* Register Link */}
           <div className="mt-8 pt-6 border-t border-gray-200 text-center">
             <p className="text-sm text-gray-600">
               Don’t have an admin account?{" "}
