@@ -17,7 +17,7 @@ const clashDisplay = localFont({
   src: [
     { path: "./fonts/ClashDisplay-Regular.otf", weight: "400" },
     { path: "./fonts/ClashDisplay-Medium.otf", weight: "500" },
-    { path: "./fonts/ClashDisplay-SemiBold.otf", weight: "600" },
+    { path: "./fonts/ClashDisplay-Semibold.otf", weight: "600" },
     { path: "./fonts/ClashDisplay-Bold.otf", weight: "700" },
   ],
   variable: "--font-heading",
